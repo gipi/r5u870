@@ -461,7 +461,7 @@ done:
 	spin_unlock_irqrestore(&usp->us_lock, flags);
 }
 
-static void usbcam_urbstream_urb_timeout(unsigned long data)
+static void usbcam_urbstream_urb_timeout(struct timer_list* data)
 {
 	struct usbcam_urbinfo *ibp = (struct usbcam_urbinfo *) data;
 	usb_unlink_urb(ibp->ib_urbs[ibp->ib_cururb]);
@@ -551,7 +551,7 @@ usbcam_urbstream_allocreq(struct usbcam_urbstream *usp, int pipe, int ival,
 		return NULL;
 	}
 
-	setup_timer(&ibp->ib_timeout,
+	timer_setup(&ibp->ib_timeout,
 		    usbcam_urbstream_urb_timeout,
 		    (unsigned long) ibp);
 
