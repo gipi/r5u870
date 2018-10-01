@@ -21,6 +21,7 @@
 #include <linux/slab.h>
 #include "usbcam_priv.h"
 #include <media/v4l2-device.h>
+#include <linux/sched/signal.h>
 /*
  * This file contains:
  * - Minidriver registration / deregistration handlers.
@@ -179,7 +180,6 @@ static int usbcam_usb_probe(struct usb_interface *intf,
     v4l2dev = (struct v4l2_device *) kzalloc(sizeof(*v4l2dev), GFP_KERNEL);
     if(!v4l2dev) { return -ENOMEM; }
     INIT_LIST_HEAD(&v4l2dev->subdevs);
-    mutex_init(&v4l2dev->ioctl_lock);
     spin_lock_init(&v4l2dev->lock);
     kref_init(&v4l2dev->ref);
     v4l2dev->release = v4l2_release;
