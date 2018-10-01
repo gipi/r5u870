@@ -22,6 +22,7 @@
 #include "usbcam_priv.h"
 #include <media/v4l2-device.h>
 #include <linux/sched/signal.h>
+#include <linux/timer.h>
 /*
  * This file contains:
  * - Minidriver registration / deregistration handlers.
@@ -180,6 +181,7 @@ static int usbcam_usb_probe(struct usb_interface *intf,
     v4l2dev = (struct v4l2_device *) kzalloc(sizeof(*v4l2dev), GFP_KERNEL);
     if(!v4l2dev) { return -ENOMEM; }
     INIT_LIST_HEAD(&v4l2dev->subdevs);
+    //mutex_init(&v4l2dev->ioctl_lock);
     spin_lock_init(&v4l2dev->lock);
     kref_init(&v4l2dev->ref);
     v4l2dev->release = v4l2_release;
@@ -900,7 +902,7 @@ void usbcam_work_stop(struct usbcam_dev *udp)
 }
 
 
-static void usbcam_delayedwork_timeout(unsigned long data)
+static void usbcam_delayedwork_timeout(struct timer_list *data)
 {
 	struct usbcam_delayedwork *dwp = (struct usbcam_delayedwork *) data;
 	int res;
@@ -915,9 +917,16 @@ void usbcam_delayedwork_init(struct usbcam_dev *udp,
 			     usbcam_workfunc_t func)
 {
 	usbcam_work_init(udp, &dwp->dw_work, func);
+#if 0
+    // see https://lwn.net/Articles/735887/
+    // and https://lwn.net/Articles/735892/
 	setup_timer(&dwp->dw_timer,
 		    usbcam_delayedwork_timeout,
 		    (unsigned long) dwp);
+#endif
+	timer_setup(&dwp->dw_timer,
+		    usbcam_delayedwork_timeout,
+		    0);
 }
 USBCAM_EXPORT_SYMBOL(usbcam_delayedwork_init);
 
