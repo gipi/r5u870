@@ -549,9 +549,10 @@ static int usbcam_v4l_vidioc_querycap(struct file *filp, void *fh,
 		 "usb:%s", udp->ud_dev->dev.bus_id);
          */
 	cap->version = udp->ud_minidrv->um_version;
-	cap->capabilities = (V4L2_CAP_VIDEO_CAPTURE |
+	cap->device_caps = V4L2_CAP_VIDEO_CAPTURE |
 			     V4L2_CAP_READWRITE |
-			     V4L2_CAP_STREAMING);
+			     V4L2_CAP_STREAMING;
+	cap->capabilities = cap->device_caps | V4L2_CAP_DEVICE_CAPS;
 	usbcam_unlock(udp);
 	return 0;
 }
