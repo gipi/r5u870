@@ -15,8 +15,9 @@ $ fakeroot make \
 ## Where we are now?
 
 The module compiles fine on 4.14 if ``CONFIG_VIDEOBUF_DMA_SG`` is enabled (and that
-on rpi0 is all but easy!) the ``/dev/video0`` is present and the following is the
-message from the kernel:
+on rpi0 is all but easy!, probably you need to manually modify the option in ``KConfig`` and
+add a ``prompt`` value otherwise is not selectable); also check that ``/dev/video0``
+is present and the following is the message from the kernel:
 
 ```
 Oct 28 19:11:04 raspberrypi0 user.info kernel: [24423.247993] usbcam: registering driver r5u870 0.11.3
