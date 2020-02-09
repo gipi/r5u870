@@ -170,7 +170,7 @@ static int usbcam_v4l_open(struct file *filp)
 #else
 	videobuf_queue_pci_init(&ufp->ufh_vbq,
 			    &usbcam_videobuf_qops,
-			    NULL,
+			    &udp->ud_dev->dev,
 			    &udp->slock,
 			    V4L2_BUF_TYPE_VIDEO_CAPTURE,
 			    V4L2_FIELD_INTERLACED,
