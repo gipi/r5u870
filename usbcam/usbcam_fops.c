@@ -944,7 +944,7 @@ static long usbcam_v4l_ioctl (struct file *file,
     //struct usbcam_fh        *ufp = (struct usbcam_fh *) file->private_data;
 	//struct usbcam_dev       *udp = ufp->ufh_dev;
 	//usbcam_dbg(udp, IOCTL_MISC, "received V4L ioctl: %d\n", cmd);
-	usbcam_dbg(((struct usbcam_fh *) file->private_data)->ufh_dev, IOCTL_MISC, "received V4L ioctl: %d\n", cmd);
+	usbcam_dbg(((struct usbcam_fh *) file->private_data)->ufh_dev, IOCTL_MISC, "received V4L ioctl: 0x%x\n", cmd);
 	
 #ifdef CONFIG_VIDEO_V4L1_COMPAT
 	if (_IOC_TYPE(cmd) == 'v')
