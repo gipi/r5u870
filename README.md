@@ -2,6 +2,15 @@
 
 This is the porting of the module to the 4.x kernel; right now is not working.
 
+```
+$ fakeroot make \
+    KDIR=/hack/buildroot/output/build/linux-4.19.16/ \
+    DESTDIR=/hack/buildroot/output/target/ \
+    FWDIR=/hack/buildroot/output/target/lib/firmware \
+    KVER=4.19.16  \
+    M=$PWD \
+    install
+```
 
 ## Where we are now?
 

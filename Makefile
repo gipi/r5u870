@@ -59,8 +59,9 @@ clean::
 endif
 
 install::
+	mkdir -p $(FWDIR)
 	install -m 0644 -o root -g root $(FWFILES) $(FWDIR)
-	/sbin/depmod -a
+	/sbin/depmod -a --basedir $(DESTDIR) $(KVER)
 	@if find /lib/modules -name $(OLD_MODULE_NM) | grep $(OLD_MODULE_NM) >/dev/null; then \
 		echo; \
 		echo "*** !!! WARNING !!! ***"; \
